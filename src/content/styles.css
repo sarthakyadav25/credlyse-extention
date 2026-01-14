@@ -380,7 +380,7 @@ html[dark] .study-mode-toggle.active .study-mode-switch {
 .youtube-study-mode-active ytd-app,
 .youtube-study-mode-active #page-manager {
   max-height: 150vh !important;
-  overflow: hidden !important;
+  overflow: auto !important;
 }
 
 /* Hide everything below the video area */
@@ -403,25 +403,28 @@ html[dark] .study-mode-toggle.active .study-mode-switch {
 
 /* Style the entire playlist panel */
 .youtube-study-mode-active ytd-playlist-panel-renderer {
-  background: linear-gradient(180deg, #1a1a1a 0%, #0f0f0f 100%) !important;
-  border-radius: 12px !important;
-  overflow: hidden !important;
-  border: 1px solid rgba(255, 255, 255, 0.1) !important;
+  background: #1c1d1f !important;
+  /* Udemy-like dark background */
+  border: 1px solid #3e4143 !important;
+  border-radius: 0 !important;
+  /* Sharper corners like Udemy */
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15) !important;
 }
 
 /* Style the playlist header */
 .youtube-study-mode-active ytd-playlist-panel-renderer #header {
-  background: linear-gradient(135deg, #1a1a1a 0%, #252525 100%) !important;
-  padding: 16px !important;
-  border-bottom: 1px solid rgba(255, 255, 255, 0.08) !important;
+  background: #1c1d1f !important;
+  padding: 16px 24px !important;
+  border-bottom: 1px solid #3e4143 !important;
 }
 
 /* Style the playlist title */
 .youtube-study-mode-active ytd-playlist-panel-renderer #header-title {
   color: #ffffff !important;
+  font-family: 'Roboto', 'Arial', sans-serif !important;
   font-size: 16px !important;
-  font-weight: 600 !important;
-  letter-spacing: 0.3px !important;
+  font-weight: 700 !important;
+  letter-spacing: 0px !important;
 }
 
 /* Hide close button (X) */
@@ -431,498 +434,187 @@ html[dark] .study-mode-toggle.active .study-mode-switch {
   display: none !important;
 }
 
-/* Hide author text and count (Krish Naik - 1/5) */
+/* Hide author text, count, loop, shuffle, dots, thumbnails */
+/* Hide author text, count, loop, shuffle, dots, thumbnails */
 .youtube-study-mode-active ytd-playlist-panel-renderer #byline-container,
 .youtube-study-mode-active ytd-playlist-panel-renderer .index-message-wrapper,
-.youtube-study-mode-active ytd-playlist-panel-renderer #publisher-container {
-  display: none !important;
-}
-
-/* Hide loop and shuffle buttons */
+.youtube-study-mode-active ytd-playlist-panel-renderer #publisher-container,
 .youtube-study-mode-active ytd-playlist-panel-renderer ytd-playlist-loop-button-renderer,
 .youtube-study-mode-active ytd-playlist-panel-renderer #playlist-action-menu tp-yt-paper-icon-button,
 .youtube-study-mode-active ytd-playlist-panel-renderer [aria-label="Loop"],
-.youtube-study-mode-active ytd-playlist-panel-renderer [aria-label="Shuffle"] {
-  display: none !important;
-}
-
-/* Hide three dots menu */
+.youtube-study-mode-active ytd-playlist-panel-renderer [aria-label="Shuffle"],
 .youtube-study-mode-active ytd-playlist-panel-renderer yt-icon-button.dropdown-trigger,
 .youtube-study-mode-active ytd-playlist-panel-renderer ytd-menu-renderer,
-.youtube-study-mode-active ytd-playlist-panel-renderer #menu {
-  display: none !important;
-}
-
-/* Hide video thumbnails in playlist */
+.youtube-study-mode-active ytd-playlist-panel-renderer #menu,
 .youtube-study-mode-active ytd-playlist-panel-renderer ytd-thumbnail,
-.youtube-study-mode-active ytd-playlist-panel-renderer #thumbnail {
-  display: none !important;
-}
-
-/* Hide channel/author name under each video */
+.youtube-study-mode-active ytd-playlist-panel-renderer #thumbnail,
+.youtube-study-mode-active ytd-playlist-panel-video-renderer ytd-thumbnail,
+.youtube-study-mode-active ytd-playlist-panel-video-renderer #thumbnail,
+.youtube-study-mode-active ytd-playlist-panel-video-renderer #thumbnail-container,
+.youtube-study-mode-active ytd-playlist-panel-video-renderer #index-container,
 .youtube-study-mode-active ytd-playlist-panel-video-renderer #byline,
 .youtube-study-mode-active ytd-playlist-panel-video-renderer .ytd-channel-name {
   display: none !important;
+  width: 0 !important;
+  min-width: 0 !important;
+  flex-basis: 0 !important;
 }
 
 /* Style the video list container */
 .youtube-study-mode-active ytd-playlist-panel-renderer #items {
-  padding: 8px !important;
+  padding: 0 !important;
 }
 
-/* Add checkbox space and style the video items */
+/* List Item Styling (Udemy Style) */
 .youtube-study-mode-active ytd-playlist-panel-video-renderer {
   display: flex !important;
   align-items: center !important;
-  padding: 12px 16px !important;
-  margin: 4px 0 !important;
-  border-radius: 8px !important;
-  background: rgba(255, 255, 255, 0.03) !important;
-  transition: all 0.2s ease !important;
-  border-left: 3px solid transparent !important;
+  padding: 12px 24px !important;
+  margin: 0 !important;
+  border-bottom: 1px solid #3e4143 !important;
+  background: transparent !important;
+  transition: background-color 0.2s ease !important;
+  border-radius: 0 !important;
+  min-height: 48px !important;
+  position: relative !important;
 }
 
 .youtube-study-mode-active ytd-playlist-panel-video-renderer:hover {
-  background: rgba(255, 255, 255, 0.08) !important;
+  background: #2d2f31 !important;
 }
 
-/* Currently playing video highlight */
+/* Active Video Styling */
 .youtube-study-mode-active ytd-playlist-panel-video-renderer[selected] {
-  background: rgba(255, 0, 52, 0.1) !important;
-  border-left: 3px solid #FF0034 !important;
+  background: #2d2f31 !important;
+  border-left: 4px solid #a435f0 !important;
+  /* Udemy purple accent, or user's red */
 }
 
-/* Create checkbox using pseudo-element */
+/* Override red accent to keep consistency if preferred, otherwise let's try the user's red */
+.youtube-study-mode-active ytd-playlist-panel-video-renderer[selected] {
+  border-left-color: #FF0034 !important;
+}
+
+/* Custom Checkbox (Left side) */
 .youtube-study-mode-active ytd-playlist-panel-video-renderer #container::before {
   content: '';
   display: inline-block;
-  width: 20px;
-  height: 20px;
-  min-width: 20px;
-  border: 2px solid #404040;
-  border-radius: 4px;
-  margin-right: 14px;
-  background: rgba(255, 255, 255, 0.05);
-  cursor: not-allowed;
+  width: 18px;
+  height: 18px;
+  min-width: 18px;
+  border: 1px solid #ffffff !important;
+  border-radius: 0 !important;
+  /* Square checkbox like Udemy */
+  margin-right: 16px;
+  background: transparent;
+  cursor: default;
   opacity: 0.6;
-  transition: all 0.2s ease;
 }
 
-/* Hover effect on checkbox */
-.youtube-study-mode-active ytd-playlist-panel-video-renderer:hover #container::before {
-  border-color: #606060;
-  opacity: 0.8;
-}
-
-/* Checked state for completed videos (currently playing) */
+/* Active/Checked Checkbox */
 .youtube-study-mode-active ytd-playlist-panel-video-renderer[selected] #container::before {
   background: #FF0034;
-  border-color: #FF0034;
+  border-color: #FF0034 !important;
   background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='white'%3E%3Cpath d='M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z'/%3E%3C/svg%3E");
   background-size: 14px;
   background-position: center;
   background-repeat: no-repeat;
   opacity: 1;
-  box-shadow: 0 2px 8px rgba(255, 0, 52, 0.3);
 }
 
-/* Style the video title */
+/* Video Title */
 .youtube-study-mode-active ytd-playlist-panel-video-renderer #video-title {
-  color: #e0e0e0 !important;
-  font-size: 13px !important;
+  color: #ffffff !important;
+  font-family: 'Roboto', 'Arial', sans-serif !important;
+  font-size: 14px !important;
   font-weight: 400 !important;
   line-height: 1.4 !important;
+  margin-right: 8px !important;
 }
 
-/* Style selected video title */
+/* Active Video Title */
 .youtube-study-mode-active ytd-playlist-panel-video-renderer[selected] #video-title {
-  color: #ffffff !important;
-  font-weight: 500 !important;
+  font-weight: 700 !important;
 }
 
-/* Style the video metadata area to take remaining space */
+/* Metadata Container (Right side) */
 .youtube-study-mode-active ytd-playlist-panel-video-renderer #meta {
   flex: 1;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: space-between !important;
+  min-width: 0;
 }
 
-/* Hide the index number */
+/* Hide original index, show custom one or hide entirely if checklist is enough */
+/* Let's keep it clean: Checkbox replaces number */
 .youtube-study-mode-active ytd-playlist-panel-video-renderer #index {
   display: none !important;
 }
 
-/* Add a subtle animation for the playing indicator */
+/* Remove 'Active' arrow indicator, creating a cleaner look */
 .youtube-study-mode-active ytd-playlist-panel-video-renderer[selected]::after {
-  content: '▶';
-  color: #FF0034;
-  font-size: 10px;
-  margin-left: auto;
-  opacity: 0.8;
+  display: none !important;
 }
 
-/* Playlist completed counter styles */
+/* Playlist Counter (Header) */
 #youtube-study-playlist-counter {
   display: none;
 }
 
 .youtube-study-mode-active #youtube-study-playlist-counter {
   display: block;
-  margin: 8px 0;
+  margin-top: 4px;
 }
 
 .study-playlist-counter {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  color: #f1f1f1;
-  font-family: 'Roboto', 'Arial', sans-serif;
-}
-
-.study-playlist-counter-label {
-  font-size: 13px;
-  color: #aaaaaa;
+  font-size: 12px;
+  color: #d1d7dc;
 }
 
 .study-playlist-counter-value {
-  font-size: 14px;
-  font-weight: 500;
-  color: #FF0034;
-}
-
-/* ============================================
-   Quiz Panel Styles
-   ============================================ */
-
-/* Quiz panel overlay */
-.quiz-panel-overlay {
-  position: fixed;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  background: rgba(0, 0, 0, 0.9);
-  z-index: 9999;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  animation: fadeIn 0.3s ease;
-}
-
-@keyframes fadeIn {
-  from {
-    opacity: 0;
-  }
-
-  to {
-    opacity: 1;
-  }
-}
-
-/* Quiz panel container */
-.quiz-panel {
-  background: linear-gradient(180deg, #1f1f1f 0%, #121212 100%);
-  border-radius: 16px;
-  border: 1px solid rgba(255, 255, 255, 0.1);
-  width: 90%;
-  max-width: 700px;
-  max-height: 90vh;
-  overflow-y: auto;
-  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
-}
-
-/* Quiz header */
-.quiz-header {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  padding: 20px 24px;
-  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
-  background: linear-gradient(135deg, #252525 0%, #1a1a1a 100%);
-  border-radius: 16px 16px 0 0;
-}
-
-.quiz-header-left {
-  display: flex;
-  align-items: center;
-  gap: 12px;
-}
-
-.quiz-icon {
-  font-size: 24px;
-}
-
-.quiz-header h2 {
-  margin: 0;
-  font-size: 18px;
-  font-weight: 600;
   color: #ffffff;
-  font-family: 'Roboto', 'Arial', sans-serif;
-}
-
-.quiz-close-btn {
-  width: 36px;
-  height: 36px;
-  border: none;
-  background: rgba(255, 255, 255, 0.1);
-  color: #aaa;
-  border-radius: 50%;
-  cursor: pointer;
-  font-size: 16px;
-  transition: all 0.2s ease;
-}
-
-.quiz-close-btn:hover {
-  background: rgba(255, 255, 255, 0.2);
-  color: #fff;
-}
-
-/* Quiz progress */
-.quiz-progress {
-  padding: 16px 24px;
-  border-bottom: 1px solid rgba(255, 255, 255, 0.05);
-}
-
-.quiz-progress-text {
-  font-size: 13px;
-  color: #aaa;
-  margin-bottom: 8px;
-  font-family: 'Roboto', 'Arial', sans-serif;
-}
-
-.quiz-progress-bar {
-  height: 4px;
-  background: #3d3d3d;
-  border-radius: 2px;
-  overflow: hidden;
-}
-
-.quiz-progress-fill {
-  height: 100%;
-  background: #FF0034;
-  transition: width 0.3s ease;
-}
-
-/* Quiz content */
-.quiz-content {
-  padding: 24px;
-}
-
-.quiz-question {
-  font-size: 18px;
-  font-weight: 500;
-  color: #fff;
-  margin: 0 0 24px 0;
-  line-height: 1.5;
-  font-family: 'Roboto', 'Arial', sans-serif;
-}
-
-/* Quiz options */
-.quiz-options {
-  display: flex;
-  flex-direction: column;
-  gap: 12px;
-}
-
-.quiz-option {
-  display: flex;
-  align-items: center;
-  gap: 14px;
-  padding: 16px 20px;
-  background: rgba(255, 255, 255, 0.05);
-  border: 2px solid rgba(255, 255, 255, 0.1);
-  border-radius: 12px;
-  cursor: pointer;
-  transition: all 0.2s ease;
-  text-align: left;
-}
-
-.quiz-option:hover:not(:disabled) {
-  background: rgba(255, 255, 255, 0.1);
-  border-color: rgba(255, 255, 255, 0.2);
-}
-
-.quiz-option.selected {
-  background: rgba(255, 0, 52, 0.15);
-  border-color: #FF0034;
-}
-
-.quiz-option.correct {
-  background: rgba(0, 200, 83, 0.15);
-  border-color: #00c853;
-}
-
-.quiz-option.incorrect {
-  background: rgba(255, 0, 52, 0.15);
-  border-color: #FF0034;
-}
-
-.quiz-option:disabled {
-  cursor: default;
-}
-
-.quiz-option-letter {
-  width: 32px;
-  height: 32px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  background: rgba(255, 255, 255, 0.1);
-  border-radius: 8px;
-  font-weight: 600;
-  color: #aaa;
-  font-size: 14px;
-  flex-shrink: 0;
-}
-
-.quiz-option.selected .quiz-option-letter {
-  background: #FF0034;
-  color: #fff;
-}
-
-.quiz-option.correct .quiz-option-letter {
-  background: #00c853;
-  color: #fff;
-}
-
-.quiz-option-text {
-  font-size: 15px;
-  color: #e0e0e0;
-  line-height: 1.4;
-  font-family: 'Roboto', 'Arial', sans-serif;
-}
-
-/* Quiz result */
-.quiz-result {
-  margin: 20px 24px 0;
-  padding: 16px 20px;
-  border-radius: 10px;
-  font-weight: 500;
-  font-size: 15px;
-  font-family: 'Roboto', 'Arial', sans-serif;
-}
-
-.quiz-result.correct {
-  background: rgba(0, 200, 83, 0.1);
-  color: #00c853;
-  border: 1px solid rgba(0, 200, 83, 0.2);
-}
-
-.quiz-result.incorrect {
-  background: rgba(255, 0, 52, 0.1);
-  color: #FF0034;
-  border: 1px solid rgba(255, 0, 52, 0.2);
-}
-
-/* Quiz actions */
-.quiz-actions {
-  padding: 20px 24px 24px;
-  display: flex;
-  justify-content: flex-end;
-}
-
-.quiz-submit-btn,
-.quiz-next-btn,
-.quiz-finish-btn {
-  padding: 12px 28px;
-  border: none;
-  border-radius: 24px;
-  font-size: 15px;
-  font-weight: 500;
-  cursor: pointer;
-  transition: all 0.2s ease;
-  font-family: 'Roboto', 'Arial', sans-serif;
-}
-
-.quiz-submit-btn {
-  background: #FF0034;
-  color: #fff;
-}
-
-.quiz-submit-btn:hover:not(:disabled) {
-  background: #e50030;
-  transform: translateY(-1px);
-}
-
-.quiz-submit-btn:disabled {
-  background: #555;
-  cursor: not-allowed;
-}
-
-.quiz-next-btn {
-  background: #FF0034;
-  color: #fff;
-}
-
-.quiz-next-btn:hover {
-  background: #e50030;
-  transform: translateY(-1px);
-}
-
-.quiz-complete {
-  display: flex;
-  align-items: center;
-  gap: 16px;
-  width: 100%;
-  justify-content: space-between;
-}
-
-.quiz-score {
-  font-size: 18px;
-  font-weight: 600;
-  color: #FF0034;
-  font-family: 'Roboto', 'Arial', sans-serif;
-}
-
-.quiz-finish-btn {
-  background: #00c853;
-  color: #fff;
-}
-
-.quiz-finish-btn:hover {
-  background: #00b048;
+  font-weight: 700;
 }
 
 /* ============================================
-   Quiz Items in Playlist
+   Quiz Button Integration (Subtle/Premium)
    ============================================ */
-
-/* Quiz button in playlist items */
 .study-quiz-btn {
   display: flex;
   align-items: center;
   gap: 6px;
-  padding: 6px 12px;
-  background: rgba(255, 0, 52, 0.15);
-  border: 1px solid rgba(255, 0, 52, 0.3);
-  border-radius: 16px;
-  color: #FF0034;
+  padding: 6px 10px;
+  background: transparent;
+  border: 1px solid #6a6f73;
+  border-radius: 4px;
+  color: #ffffff;
   font-size: 12px;
-  font-weight: 500;
+  font-weight: 700;
   cursor: pointer;
   transition: all 0.2s ease;
-  margin-left: auto;
-  font-family: 'Roboto', 'Arial', sans-serif;
+  margin-left: 12px;
+  white-space: nowrap;
+  position: relative !important;
+  z-index: 100 !important;
+  pointer-events: auto !important;
 }
 
 .study-quiz-btn:hover {
-  background: rgba(255, 0, 52, 0.25);
-  border-color: #FF0034;
-  transform: scale(1.02);
+  background: rgba(255, 255, 255, 0.1);
+  border-color: #ffffff;
 }
 
 .study-quiz-btn-icon {
   font-size: 14px;
 }
 
-/* Show video duration/index after checkbox */
-.youtube-study-mode-active ytd-playlist-panel-video-renderer #index {
-  display: flex !important;
-  align-items: center;
-  justify-content: center;
-  min-width: 24px;
-  font-size: 12px;
-  color: #888;
-  margin-right: 8px;
+/* Quiz Panel Styles (Existing, just verifying z-index) */
+.quiz-panel-overlay {
+  z-index: 99999 !important;
+  /* Ensure on top of everything */
 }
+
 
 /* ============================================
    Responsive adjustments
@@ -943,4 +635,542 @@ html[dark] .study-mode-toggle.active .study-mode-switch {
   #youtube-study-mode-container {
     margin-left: 8px;
   }
+}
+
+/* ============================================
+   Quiz Functionality & Summary Views
+   ============================================ */
+.quiz-panel-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background: rgba(0, 0, 0, 0.7);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 9999;
+  backdrop-filter: blur(4px);
+}
+
+.quiz-panel {
+  background: #212121;
+  /* YouTube Native Popup Color */
+  width: 700px;
+  /* Wider modal */
+  max-width: 95%;
+  border-radius: 12px;
+  box-shadow: 0 16px 24px 2px rgba(0, 0, 0, 0.14), 0 6px 30px 5px rgba(0, 0, 0, 0.12), 0 8px 10px -5px rgba(0, 0, 0, 0.4);
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  border: none;
+  animation: slideUp 0.2s cubic-bezier(0.05, 0.03, 0.35, 1);
+  font-family: "Roboto", "Arial", sans-serif;
+  color: #fff;
+}
+
+@keyframes slideUp {
+  from {
+    opacity: 0;
+    transform: scale(0.9);
+  }
+
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+.quiz-header {
+  padding: 16px 24px;
+  background: transparent;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.quiz-header-left {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.quiz-icon {
+  font-size: 20px;
+}
+
+.quiz-header h2 {
+  margin: 0;
+  font-size: 18px;
+  font-weight: 700;
+  color: #ffffff;
+}
+
+.quiz-close-btn {
+  background: transparent;
+  border: none;
+  color: #a0a0a0;
+  font-size: 24px;
+  cursor: pointer;
+  padding: 4px;
+  line-height: 1;
+  transition: color 0.2s;
+}
+
+.quiz-close-btn:hover {
+  color: #ffffff;
+}
+
+.quiz-progress {
+  padding: 16px 24px;
+  background: #1c1d1f;
+}
+
+.quiz-progress-text {
+  font-size: 12px;
+  color: #a0a0a0;
+  margin-bottom: 8px;
+  font-weight: 500;
+}
+
+.quiz-progress-bar {
+  height: 4px;
+  background: #3e4143;
+  border-radius: 2px;
+  overflow: hidden;
+}
+
+.quiz-progress-fill {
+  height: 100%;
+  background: #a435f0;
+  /* Udemy Purple */
+  transition: width 0.3s ease;
+}
+
+.quiz-content {
+  padding: 0 24px 24px;
+  flex: 1;
+}
+
+.quiz-question {
+  margin: 0 0 20px;
+  font-size: 16px;
+  line-height: 1.5;
+  color: #ffffff;
+  font-weight: 500;
+}
+
+.quiz-options {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.quiz-option {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 12px 16px;
+  background: transparent;
+  border: 1px solid #6a6f73;
+  border-radius: 8px;
+  color: #ffffff;
+  cursor: pointer;
+  text-align: left;
+  transition: all 0.2s ease;
+  font-size: 14px;
+}
+
+.quiz-option:hover:not(:disabled) {
+  background: #2d2f31;
+  border-color: #ffffff;
+}
+
+.quiz-option.selected {
+  border-color: #a435f0;
+  background: rgba(164, 53, 240, 0.1);
+}
+
+.quiz-option.correct {
+  border-color: #4caf50;
+  background: rgba(76, 175, 80, 0.1);
+}
+
+.quiz-option.incorrect {
+  border-color: #f44336;
+  background: rgba(244, 67, 54, 0.1);
+}
+
+.quiz-option:disabled {
+  cursor: default;
+}
+
+.quiz-option-letter {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 24px;
+  height: 24px;
+  border: 1px solid #6a6f73;
+  border-radius: 50%;
+  font-size: 12px;
+  font-weight: 700;
+  color: #a0a0a0;
+}
+
+.quiz-option.selected .quiz-option-letter {
+  border-color: #a435f0;
+  color: #a435f0;
+}
+
+.quiz-option.correct .quiz-option-letter {
+  border-color: #4caf50;
+  color: #4caf50;
+  background: #4caf50;
+  color: white;
+  border: none;
+}
+
+.quiz-option.incorrect .quiz-option-letter {
+  border-color: #f44336;
+  color: #f44336;
+  background: #f44336;
+  color: white;
+  border: none;
+}
+
+.quiz-result {
+  margin: 0 24px 20px;
+  padding: 12px 16px;
+  border-radius: 8px;
+  font-weight: 500;
+  font-size: 14px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.quiz-result.correct {
+  background: rgba(76, 175, 80, 0.1);
+  color: #4caf50;
+  border: 1px solid rgba(76, 175, 80, 0.2);
+}
+
+.quiz-result.incorrect {
+  background: rgba(244, 67, 54, 0.1);
+  color: #f44336;
+  border: 1px solid rgba(244, 67, 54, 0.2);
+}
+
+.quiz-actions {
+  padding: 20px 24px;
+  background: #2d2f31;
+  border-top: 1px solid #3e4143;
+  display: flex;
+  justify-content: flex-end;
+}
+
+.quiz-submit-btn,
+.quiz-next-btn,
+.quiz-finish-btn {
+  padding: 10px 24px;
+  border-radius: 4px;
+  font-weight: 700;
+  font-size: 14px;
+  cursor: pointer;
+  border: none;
+  transition: background-color 0.2s;
+}
+
+.quiz-submit-btn {
+  background: #a435f0;
+  color: white;
+}
+
+.quiz-submit-btn:hover:not(:disabled) {
+  background: #8710d8;
+}
+
+.quiz-submit-btn:disabled {
+  background: #6a6f73;
+  cursor: not-allowed;
+  opacity: 0.7;
+}
+
+.quiz-next-btn,
+.quiz-finish-btn {
+  background: #ffffff;
+  color: #1c1d1f;
+}
+
+.quiz-next-btn:hover,
+.quiz-finish-btn:hover {
+  background: #e0e0e0;
+}
+
+.quiz-complete {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  width: 100%;
+  justify-content: flex-end;
+}
+
+.quiz-score {
+  font-weight: 700;
+  color: #ffffff;
+  font-size: 16px;
+}
+
+/* ============================================
+   Quiz Summary & Sponsored Ad Styles
+   ============================================ */
+
+.quiz-summary-content {
+  padding: 32px 24px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 32px;
+}
+
+.quiz-final-score {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+}
+
+.score-label {
+  font-size: 14px;
+  color: #a0a0a0;
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.score-value {
+  font-size: 48px;
+  font-weight: 800;
+  color: #ffffff;
+  line-height: 1;
+  background: linear-gradient(135deg, #a435f0 0%, #ff0034 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+/* Sponsored Ad Card (Replit Style - Native Look) */
+.sponsored-ad-card {
+  width: 100%;
+  background: #0e121b;
+  /* Deep dark blue background */
+  border: 1px solid #2b3245;
+  border-radius: 12px;
+  overflow: hidden;
+  position: relative;
+  transition: all 0.3s ease;
+  display: flex;
+  flex-direction: column;
+  margin-top: 10px;
+  font-family: "Roboto", "Arial", sans-serif;
+}
+
+.sponsored-ad-card:hover {
+  border-color: #3b4459;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+}
+
+.ad-banner {
+  height: 48px;
+  background: linear-gradient(180deg, #2b1156 0%, #0e121b 100%);
+  position: relative;
+  overflow: hidden;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+/* Vertical stripe effect */
+.ad-banner::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-image: repeating-linear-gradient(90deg,
+      rgba(255, 255, 255, 0.03) 0px,
+      rgba(255, 255, 255, 0.03) 1px,
+      transparent 1px,
+      transparent 20px);
+  opacity: 0.5;
+}
+
+/* Top glow */
+.ad-banner::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 50%;
+  background: linear-gradient(180deg, rgba(138, 43, 226, 0.2) 0%, transparent 100%);
+}
+
+.ad-header {
+  padding: 12px 16px;
+  background: #0e121b;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  cursor: pointer;
+  z-index: 2;
+}
+
+.ad-header-left {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.replit-logo-small {
+  width: 32px;
+  height: 32px;
+  background: #f26207;
+  color: white;
+  border-radius: 6px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 900;
+  font-size: 18px;
+  font-family: monospace;
+  flex-shrink: 0;
+}
+
+.ad-header-text {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.ad-title {
+  font-size: 16px;
+  font-weight: 500;
+  color: #ffffff;
+  line-height: 1.2;
+}
+
+.ad-subtitle {
+  font-size: 13px;
+  color: #aebacf;
+  margin-top: 2px;
+}
+
+.ad-expand-btn {
+  background: transparent;
+  border: none;
+  color: #aebacf;
+  cursor: pointer;
+  transition: transform 0.3s ease;
+  font-size: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 24px;
+  height: 24px;
+}
+
+.ad-expand-btn.expanded {
+  transform: rotate(180deg);
+  /* Point up when expanded (like native details) or down? 
+                              Usually native details: pointing right (collapsed) -> pointing down (expanded). 
+                              Here we use up/down triangle. Triangle up when expanded seems standard for "collapse". */
+}
+
+/* Expanded Content */
+.ad-expanded-content {
+  background: #0e121b;
+  padding: 0 12px 12px 12px;
+  /* Pad inside card */
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.ad-links-list {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.ad-link-item {
+  display: flex;
+  flex-direction: column;
+  padding: 12px 16px;
+  background: #1c2333;
+  /* Slightly lighter than card bg */
+  border-radius: 8px;
+  text-decoration: none;
+  position: relative;
+  transition: background 0.2s;
+  border: 1px solid transparent;
+}
+
+.ad-link-item:hover {
+  background: #2b3245;
+}
+
+.ad-link-title {
+  font-size: 14px;
+  font-weight: 700;
+  color: #ffffff;
+  margin-bottom: 4px;
+}
+
+.ad-link-desc {
+  font-size: 13px;
+  color: #9ca3af;
+  line-height: 1.4;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.ad-link-arrow {
+  position: absolute;
+  top: 14px;
+  right: 14px;
+  color: #aebacf;
+  font-size: 14px;
+}
+
+.ad-visit-btn {
+  display: block;
+  width: 100%;
+  text-align: center;
+  background: #2b3245;
+  color: #ffffff;
+  padding: 12px;
+  border-radius: 24px;
+  /* Pill shape */
+  text-decoration: none;
+  font-size: 14px;
+  font-weight: 600;
+  margin-top: 8px;
+  transition: background 0.2s;
+}
+
+.ad-visit-btn:hover {
+  background: #3b4459;
+}
+
+.ad-disclaimer {
+  font-size: 11px;
+  color: #717171;
+  text-align: center;
+  margin-top: 16px;
+  font-family: "Roboto", "Arial", sans-serif;
 }
