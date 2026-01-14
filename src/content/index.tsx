@@ -5,6 +5,7 @@ import { ProgressPanel } from './ProgressPanel';
 import { ProgressWheel } from './ProgressWheel';
 import { PlaylistCompletedCounter } from './PlaylistCompletedCounter';
 import { QuizPanel } from './QuizPanel';
+import { VideoTracker, getVideoIdFromUrl } from './tracking';
 import './styles.css';
 
 // Container IDs
@@ -19,6 +20,47 @@ let progressPanelRoot: Root | null = null;
 let progressWheelRoot: Root | null = null;
 let playlistCounterRoot: Root | null = null;
 let quizPanelRoot: Root | null = null;
+
+// Video tracker instance
+let videoTracker: VideoTracker | null = null;
+let currentVideoId: string | null = null;
+
+// Initialize or reinitialize the video tracker
+function initializeTracker(): void {
+    const videoId = getVideoIdFromUrl();
+    
+    // Only initialize if study mode is active
+    if (!document.body.classList.contains('youtube-study-mode-active')) {
+        return;
+    }
+
+    // Skip if same video
+    if (videoId === currentVideoId && videoTracker) {
+        return;
+    }
+
+    // Destroy existing tracker if video changed
+    if (videoTracker && videoId !== currentVideoId) {
+        videoTracker.destroy();
+        videoTracker = null;
+    }
+
+    // Create new tracker
+    if (videoId && !videoTracker) {
+        currentVideoId = videoId;
+        videoTracker = new VideoTracker(videoId);
+        console.log(`[Credlyse] Started tracking video: ${videoId}`);
+    }
+}
+
+// Destroy the video tracker
+function destroyTracker(): void {
+    if (videoTracker) {
+        videoTracker.destroy();
+        videoTracker = null;
+        currentVideoId = null;
+    }
+}
 
 // Check if we're on a video watch page
 function isVideoPage(): boolean {
@@ -308,19 +350,25 @@ function handleNavigation(): void {
     const originalPushState = history.pushState;
     const originalReplaceState = history.replaceState;
 
+    const onNavigate = () => {
+        setTimeout(() => {
+            injectToggle();
+            // Reinitialize tracker for new video (if study mode is active)
+            initializeTracker();
+        }, 100);
+    };
+
     history.pushState = function (...args) {
         originalPushState.apply(this, args);
-        setTimeout(injectToggle, 100);
+        onNavigate();
     };
 
     history.replaceState = function (...args) {
         originalReplaceState.apply(this, args);
-        setTimeout(injectToggle, 100);
+        onNavigate();
     };
 
-    window.addEventListener('popstate', () => {
-        setTimeout(injectToggle, 100);
-    });
+    window.addEventListener('popstate', onNavigate);
 }
 
 // Initialize
@@ -335,9 +383,11 @@ function init(): void {
             setTimeout(() => {
                 injectQuizButtons();
                 setupPlaylistObserver();
+                initializeTracker(); // Start video tracking
             }, 500);
         } else {
             disconnectPlaylistObserver();
+            destroyTracker(); // Stop video tracking
         }
     }) as EventListener);
 
@@ -346,6 +396,7 @@ function init(): void {
         setTimeout(() => {
             injectQuizButtons();
             setupPlaylistObserver();
+            initializeTracker(); // Start video tracking
         }, 1000);
     }
 
